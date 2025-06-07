@@ -5,6 +5,7 @@ import gspread
 import subprocess
 import time
 import xmltodict
+import os
 
 sheetkey = "1XUz_SZCHG6DOswnzzHpyI7CkBUMnjq904xX3Zarudxo"
 
@@ -29,9 +30,10 @@ hashes.reverse()
 kk = 1
 for hash in hashes:
     subprocess.run(["git", "checkout", hash])
-    with open("../social.xml") as fin:
+    file_path = os.path.join(os.path.dirname(__file__), "social.xml")
+    with open(file_path, "r", encoding="utf-8") as fin:
         xmlb = fin.read()
-        xml = (bytes(xmlb, encoding='utf8'))
+        xml = bytes(xmlb, encoding="utf8")
 
     data = {}
     main = xmltodict.parse(xml)
